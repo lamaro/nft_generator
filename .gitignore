@@ -1,9 +1,9 @@
 
 
 ## Folders assets
-data/characters/
-outputs/
-layers/
+**/data/characters/
+**/outputs/
+**/layers/
 
 
 # Logs
