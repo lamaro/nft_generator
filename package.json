@@ -1,0 +1,21 @@
+{
+  "name": "wtd-nft-generator",
+  "version": "1.1.0",
+  "description": "Just another NFT generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js",
+    "ipfs": "node ipfs_ready.js",
+    "check_files": "node check_files.js",
+    "duplicates": "node check_duplicates.js"
+  },
+  "author": "@lamaro",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.8.0",
+    "lodash": "^4.17.21",
+    "uniqid": "^5.4.0",
+    "weighted-random-object": "^1.0.8"
+  }
+}
