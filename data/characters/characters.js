@@ -10,10 +10,10 @@ Traits Indexes
 */
 
 const characters = [
-  { name: "Toxic", weight: 5, folder: "toxic" },
-  { name: "See thru", weight: 15, folder: "see-throu" },
-  { name: "Scenic", weight: 60, folder: "scenic" },
-  { name: "Solid", weight: 80, folder: "solid" },
+  { name: "Toxic Mold", weight: 5, folder: "toxic" },
+  { name: "InvisiBread", weight: 15, folder: "see-throu" },
+  { name: "Scenic", weight: 50, folder: "scenic" },
+  { name: "OG", weight: 80, folder: "solid" },
 ];
 
 module.exports = {

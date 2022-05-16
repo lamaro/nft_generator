@@ -4,19 +4,20 @@ const { createCanvas, loadImage } = require("canvas");
 const { characters } = require("./data/characters/characters");
 const weightedRandomObject = require("weighted-random-object");
 
-const TOTAL_NFTS = 3000; //NFT desired amount
+const TOTAL_NFTS = 6050; //NFT desired amount
 const toCheck = [];
+const chracterLayers = [];
 
 const OFFSET = 0;
 
-// const imageFormat = {
-//   width: 2048,
-//   height: 2048,
-// };
 const imageFormat = {
-  width: 500,
-  height: 500,
+  width: 2048,
+  height: 2048,
 };
+// const imageFormat = {
+//   width: 500,
+//   height: 500,
+// };
 
 const dir = {
   traitTypes: `./layers/trait_types`,
@@ -49,7 +50,7 @@ const recreateOutputsDir = () => {
   fs.mkdirSync(`${dir.outputs}/stats`);
 };
 
-const drawImage = async (traitTypes, loopIndex) => {
+const drawImage = async (traitTypes, loopIndex, character) => {
   const drawableTraits = traitTypes.filter(({ file }) => file !== "");
   for (let index = 0; index < drawableTraits.length; index++) {
     try {
@@ -70,14 +71,16 @@ const drawImage = async (traitTypes, loopIndex) => {
     return { trait_type: attrs.type, value: attrs.name };
   });
 
+  const metaAttrWithCharacter = [...metaAttr, { "trait_type": "Type", "value": `${character}` }]
+
   fs.writeFileSync(
     `${dir.outputs}/metadata/${loopIndex + 1}.json`,
     JSON.stringify({
       image: `${loopIndex + 1}.png`,
       //   externalUrl: `https://domain/token/${loopIndex + 1}`,
-      description: `Description TBA`,
       name: `Breadverse #${loopIndex + 1}`,
-      attributes: metaAttr,
+      description: `Breadaverse is a collection of absurdly fun, hand-drawn Breads that give you exclusive access to The Bakery where we're baking up the highest quality content in Web3, producing exciting community events, and creating innovative IRL and metaverse benefits for holders.`,
+      attributes: metaAttrWithCharacter,
       // files: metaAttrFiles
     }),
     function (err) {
@@ -137,83 +140,23 @@ const createNFT = async (character, loopIndex) => {
   //Layer[5] => Mouth
   //Layer[6] => Topper
   if (
-    (layers[3].name === "The Mystical Fruit" && layers[6].name === "Breadphones") ||
-    (layers[3].name === "The Mystical Fruit" && layers[6].name === "Meowphones") ||
-    (layers[3].name !== "Empty" && layers[6].name === "The Flip") ||
-    (layers[3].name === "RoboLoaf" && layers[5].name === "Bandana - Purp") ||
-    (layers[3].name === "RoboLoaf" && layers[5].name === "Bandana - Red") ||
-    (layers[3].name === "All Natural" && layers[5].name === "Bandana - Purp") ||
-    (layers[3].name === "All Natural" && layers[5].name === "Bandana - Red") ||
-    (layers[3].name === "The Artist" && layers[5].name === "Bandana - Purp") ||
-    (layers[3].name === "The Artist" && layers[5].name === "Bandana - Red") ||
-    (layers[3].name === "RoboLoaf" && layers[5].name === "Trash Can") ||
+  
+    (layers[3].name === "All Natural" && layers[5].name === "Bandana Red") ||
     (layers[3].name === "All Natural" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "The Artist" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "Swords" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "Red Backpack" && layers[5].name === "Trash Can") ||
+    // (layers[3].name === "The Artist" && layers[5].name === "Trash Can") ||
     (layers[3].name === "Blue Backpack" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "Black Backpack" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "Punk" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "Runaway" && layers[5].name === "Trash Can") ||
-    (layers[3].name === "The Mystical Fruit" && layers[5].name === "Trash Can") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Deli Wrap Blueberry") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Deli Wrap Blueberry") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Deli Wrap Blueberry") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Deli Wrap Classic") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Deli Wrap Classic") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Deli Wrap Classic") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Deli Wrap Grape") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Deli Wrap Grape") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Deli Wrap Grape") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Deli Wrap Raspberry") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Deli Wrap Raspberry") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Deli Wrap Raspberry") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Boomer Blue") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Boomer Blue") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Boomer Blue") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Boomer Red") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Boomer Red") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Boomer Red") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Magic Hat Black") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Magic Hat Black") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Magic Hat Black") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Magic Hat Purple") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Magic Hat Purple") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Magic Hat Purple") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "I Do") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "I Do") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "I Do") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "The Flip") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "The Flip") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "The Flip") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Alien Wear Green") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Alien Wear Green") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Alien Wear Green") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Alien Wear Red") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Alien Wear Red") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Alien Wear Red") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Buns Blue") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Buns Blue") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Buns Blue") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Buns Pink") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Buns Pink") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Buns Pink") ||
-    (layers[4].name === "Cool Shades Red" && layers[6].name === "Trash Lid") ||
-    (layers[4].name === "Cool Shades Blue" && layers[6].name === "Trash Lid") ||
-    (layers[4].name === "Cool Shades Black" && layers[6].name === "Trash Lid") ||
-    (layers[4].name === "Nounish Blue" && layers[6].name === "Bunny") ||
-    (layers[4].name === "Nounish Red" && layers[6].name === "Bunny") ||
-    (layers[4].name === "GM Blue" && layers[6].name === "I Do") ||
-    (layers[4].name === "GM Green" && layers[6].name === "I Do") ||
-    (layers[4].name === "GM Red" && layers[6].name === "I Do") ||
-    (layers[4].name === "Marmaduke" && layers[5].name === "Papa Bear") ||
+    // (layers[3].name === "Punk" && layers[5].name === "Trash Can") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Deli Wrap Blueberry") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Deli Wrap Classic") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Boomer Blue") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Boomer Red") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Magic Hat Black") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Magic Hat Purple") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Buns Pink") ||
+    (layers[4].name === "Cool Black" && layers[6].name === "Trash Lid") ||
     (layers[4].name === "Marmaduke" && layers[5].name === "Baby Bear") ||
-    (layers[5].name === "Fly Catcher" && layers[6].name === "Flow") ||
-    (layers[5].name === "Doobie" && layers[6].name === "Flow") ||
-    (layers[5].name === "Eco Friendly Straw" && layers[6].name === "Flow") ||
-    (layers[5].name === "Puffer OJ" && layers[6].name === "Flow") ||
-    (layers[5].name === "Puffer Purp" && layers[6].name === "Flow") ||
-    (layers[5].name === "Puffer Smoke" && layers[6].name === "Flow")
+    (layers[4].name === "Marmaduke" && layers[5].name === "Baby Bear")
+    
   ) {
     console.log("- Conditional missmatch -");
     try {
@@ -227,8 +170,24 @@ const createNFT = async (character, loopIndex) => {
     return;
   }
 
+   //Check duplicates
+
+   const stringLayers = JSON.stringify(layers);
+   if(chracterLayers.indexOf(stringLayers) > -1) {
+     console.log('same NFT combination founded! Trying it again');
+     try{
+       await createNFT(character, loopIndex);
+     } catch(e){
+       if(e.toString() === 'RangeError: Maximum call stack size exceeded'){
+         console.log('You are trying to generate more NFTs than the amount of possible combinations that you can build.', e);
+       } 
+     }
+     return;
+   }
+   chracterLayers.push(stringLayers);
+
   //Save Image and metadata
-  await drawImage(layers, loopIndex);
+  await drawImage(layers, loopIndex, character.name);
 };
 
 const runScript = (scriptPath, callback) => {

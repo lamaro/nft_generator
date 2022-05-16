@@ -8,7 +8,9 @@
     "start": "node index.js",
     "ipfs": "node ipfs_ready.js",
     "check_files": "node check_files.js",
-    "duplicates": "node check_duplicates.js"
+    "duplicates": "node check_duplicates.js",
+    "ones": "node one-of-one.js"
+
   },
   "author": "@lamaro",
   "license": "ISC",
