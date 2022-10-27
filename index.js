@@ -3,7 +3,6 @@ const childProcess = require("child_process");
 const { createCanvas, loadImage } = require("canvas");
 const { characters } = require("./data/characters/characters");
 const weightedRandomObject = require("weighted-random-object");
-
 const TOTAL_NFTS = 6050; //NFT desired amount
 const toCheck = [];
 const chracterLayers = [];
